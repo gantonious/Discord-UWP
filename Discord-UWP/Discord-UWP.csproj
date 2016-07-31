@@ -110,6 +110,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Discord_UWP.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="API\" />
+    <Folder Include="Authentication\" />
+    <Folder Include="Gateway\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
