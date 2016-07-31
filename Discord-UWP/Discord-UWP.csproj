@@ -107,13 +107,17 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Channel\Models\BulkDelete.cs" />
+    <Compile Include="API\Channel\Models\EditMessage.cs" />
+    <Compile Include="API\Channel\IChannelApi.cs" />
+    <Compile Include="API\Channel\Models\MessageUpsert.cs" />
+    <Compile Include="API\Channel\Models\ModifyChannel.cs" />
     <Compile Include="Authentication\IAuthenticator.cs" />
     <Compile Include="Authentication\DiscordAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Discord_UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\" />
     <Folder Include="Gateway\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
