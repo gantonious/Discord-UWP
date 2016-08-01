@@ -14,10 +14,12 @@ namespace Discord_UWP.Gateway.Sockets
         public event EventHandler<ConnectionClosedEventArgs> ConnectionClosed;      
 
         private readonly MessageWebSocket _socket;
+        private readonly DataWriter _dataWriter;
 
         public WebMessageSocket()
         {
             _socket = GetMessageWebSocket();
+            _dataWriter = GetDataWriter();
         }
 
         private MessageWebSocket GetMessageWebSocket()
@@ -30,6 +32,11 @@ namespace Discord_UWP.Gateway.Sockets
             return socket;
         }
 
+        private DataWriter GetDataWriter()
+        {
+            return new DataWriter(_socket.OutputStream);
+        }
+
         public async Task ConnectAsync(string connectionUrl)
         {
             await _socket.ConnectAsync(new Uri(connectionUrl));
@@ -37,11 +44,8 @@ namespace Discord_UWP.Gateway.Sockets
 
         public async Task SendMessageAsync(string message)
         {
-            using (var dataWriter = new DataWriter(_socket.OutputStream))
-            {
-                dataWriter.WriteString(message);
-                await dataWriter.StoreAsync();
-            }
+            _dataWriter.WriteString(message);
+            await _dataWriter.StoreAsync();
         }
 
         private void HandleMessage(object sender, MessageWebSocketMessageReceivedEventArgs e)
@@ -73,6 +77,12 @@ namespace Discord_UWP.Gateway.Sockets
             var connectionClosedEvent = new ConnectionClosedEventArgs();
 
             ConnectionClosed?.Invoke(this, connectionClosedEvent);
+        }
+
+        public void Dispose()
+        {
+            _socket.Dispose();
+            _dataWriter.Dispose();
         }
     }
 }

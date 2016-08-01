@@ -17,7 +17,7 @@ namespace Discord_UWP.Gateway.Sockets
        
     }
 
-    public interface IWebMessageSocket
+    public interface IWebMessageSocket : IDisposable
     {
         event EventHandler<MessageReceivedEventArgs> MessageReceived;
         event EventHandler<ConnectionClosedEventArgs> ConnectionClosed;
