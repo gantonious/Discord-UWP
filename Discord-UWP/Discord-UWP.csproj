@@ -118,7 +118,7 @@
     <Compile Include="API\DiscordAPIConfiguration.cs" />
     <Compile Include="API\Gateway\IGatewayConfigApi.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
-    <Compile Include="Gateway\Sockets\IWebScoket.cs" />
+    <Compile Include="Gateway\Sockets\IWebMessageSocket.cs" />
     <Compile Include="Gateway\Sockets\IWebSocketExtensions.cs" />
     <Compile Include="Gateway\Sockets\WebMessageSocket.cs" />
     <Compile Include="API\RestFactory.cs" />
