@@ -10,6 +10,11 @@ namespace Discord_UWP.SharedModels
     public struct GatewayConfig
     {
         [JsonProperty("url")]
-        public string Url { get; set; }
+        public string BaseUrl { get; set; }
+
+        public string GetFullGatewayUrl(string encodingType, string version)
+        {
+            return $"{BaseUrl}/?encoding={encodingType}&v={version}";
+        }
     }
 }
