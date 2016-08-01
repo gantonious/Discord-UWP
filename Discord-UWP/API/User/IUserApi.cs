@@ -21,7 +21,7 @@ namespace Discord_UWP.API.User
         Task<SharedModels.User> ModifyCurrentUser([Body] ModifyUser modifyUser);
 
         [Get("/users/{userId}")]
-        Task<SharedModels.User> GetCurrentUser([AliasAs("userId")] string userId);
+        Task<SharedModels.User> GetUser([AliasAs("userId")] string userId);
 
         [Get("/users/@me/guilds")]
         Task<IEnumerable<UserGuild>> GetCurrentUserGuilds();
