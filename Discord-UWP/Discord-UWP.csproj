@@ -116,11 +116,13 @@
     <Compile Include="API\Channel\Models\MessageUpsert.cs" />
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
     <Compile Include="API\DiscordAPIConfiguration.cs" />
+    <Compile Include="API\Gateway\IGatewayConfigApi.cs" />
     <Compile Include="API\RestFactory.cs" />
     <Compile Include="API\User\Models\ModifyUser.cs" />
     <Compile Include="SharedModels\Attachment.cs" />
     <Compile Include="SharedModels\Connection.cs" />
     <Compile Include="SharedModels\Emoji.cs" />
+    <Compile Include="SharedModels\GatewayConfig.cs" />
     <Compile Include="SharedModels\Guild.cs" />
     <Compile Include="SharedModels\GuildChannel.cs" />
     <Compile Include="SharedModels\DirectMessageChannel.cs" />
