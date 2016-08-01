@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Refit;
 using Discord_UWP.API.Channel.Models;
+using Discord_UWP.SharedModels;
 
 namespace Discord_UWP.API.Channel
 {
@@ -23,18 +24,18 @@ namespace Discord_UWP.API.Channel
         Task DeleteChannelMessages([AliasAs("channelId")] string channelId);
 
         [Get("/channels/{channelId}/messages/{messageId)")]
-        Task GetChannelMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
+        Task<Message> GetChannelMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
 
         [Post("/channels/{channelId}/messages")]
-        Task CreateMessage([AliasAs("channelId")] string channelId, [Body] MessageUpsert message);
+        Task<Message> CreateMessage([AliasAs("channelId")] string channelId, [Body] MessageUpsert message);
 
         [Post("/channels/{channelId}/messages")]
-        Task UploadFile([AliasAs("channelId")] string channelId);
+        Task<Message> UploadFile([AliasAs("channelId")] string channelId);
 
         [Delete("/channels/{channelId}/messages/{messageId}")]
         Task DeleteMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
 
-        [Post("/channels /{channelId}/messages/bulk_delete")]
+        [Post("/channels/{channelId}/messages/bulk_delete")]
         Task BulkDeleteMessages([AliasAs("channelId")] string channelId, [Body] BulkDelete messages);
 
         [Post("/channels/{channelId}/messages/{messageId}/ack")]
@@ -44,10 +45,10 @@ namespace Discord_UWP.API.Channel
         Task EditChannelPermissions([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overwriteId, [Body] EditChannel editChannel);
 
         [Get("/channels/{channelId}/invites")]
-        Task GetChannelInvites([AliasAs("channelId")] string channelId);
+        Task<IEnumerable<Invite>> GetChannelInvites([AliasAs("channelId")] string channelId);
 
         [Post("/channels/{channelId}/invites")]
-        Task CreateChannelInvite([AliasAs("channelId")] string channelId);
+        Task<Invite> CreateChannelInvite([AliasAs("channelId")] string channelId);
 
         [Delete("/channels/{channelId}/permissions/{overwriteId}")]
         Task DeleteChannelPermission([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overwriteId);
@@ -56,7 +57,7 @@ namespace Discord_UWP.API.Channel
         Task TriggerTypingIndicator([AliasAs("channelId")] string channelId);
 
         [Get("/channels/{channelId}/pins")]
-        Task GetPinnedMessages([AliasAs("channelId")] string channelId);
+        Task<IEnumerable<Message>> GetPinnedMessages([AliasAs("channelId")] string channelId);
 
         [Put("/channels/{channelId}/pins/{messageId}")]
         Task AddPinnedChannelMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
