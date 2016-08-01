@@ -114,6 +114,7 @@
     <Compile Include="API\Channel\IChannelApi.cs" />
     <Compile Include="API\Channel\Models\MessageUpsert.cs" />
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
+    <Compile Include="API\User\Models\ModifyUser.cs" />
     <Compile Include="SharedModels\Attachment.cs" />
     <Compile Include="SharedModels\Connection.cs" />
     <Compile Include="SharedModels\Emoji.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="SharedModels\Overwrite.cs" />
     <Compile Include="SharedModels\Role.cs" />
     <Compile Include="SharedModels\User.cs" />
+    <Compile Include="API\User\IUserApi.cs" />
     <Compile Include="SharedModels\UserGuild.cs" />
     <Compile Include="Authentication\IAuthenticator.cs" />
     <Compile Include="Authentication\DiscordAuthenticator.cs" />
