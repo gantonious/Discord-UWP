@@ -117,6 +117,7 @@
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
     <Compile Include="API\DiscordAPIConfiguration.cs" />
     <Compile Include="API\Gateway\IGatewayConfigApi.cs" />
+    <Compile Include="Gateway\GatewayEvent.cs" />
     <Compile Include="Gateway\Sockets\IWebScoket.cs" />
     <Compile Include="Gateway\Sockets\IWebSocketExtensions.cs" />
     <Compile Include="Gateway\Sockets\WebMessageSocket.cs" />
