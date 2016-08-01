@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\AuthenticatingHttpClientHandler.cs" />
     <Compile Include="API\Channel\Models\BulkDelete.cs" />
     <Compile Include="API\Channel\Models\ChannelInvite.cs" />
     <Compile Include="API\Channel\Models\EditChannel.cs" />
@@ -114,6 +115,8 @@
     <Compile Include="API\Channel\IChannelApi.cs" />
     <Compile Include="API\Channel\Models\MessageUpsert.cs" />
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
+    <Compile Include="API\DiscordAPIConfiguration.cs" />
+    <Compile Include="API\RestFactory.cs" />
     <Compile Include="API\User\Models\ModifyUser.cs" />
     <Compile Include="SharedModels\Attachment.cs" />
     <Compile Include="SharedModels\Connection.cs" />
