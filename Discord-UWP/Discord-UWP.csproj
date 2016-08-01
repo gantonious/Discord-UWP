@@ -108,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Channel\Models\BulkDelete.cs" />
+    <Compile Include="API\Channel\Models\ChannelInvite.cs" />
+    <Compile Include="API\Channel\Models\EditChannel.cs" />
     <Compile Include="API\Channel\Models\EditMessage.cs" />
     <Compile Include="API\Channel\IChannelApi.cs" />
     <Compile Include="API\Channel\Models\MessageUpsert.cs" />

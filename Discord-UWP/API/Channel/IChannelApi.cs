@@ -41,9 +41,27 @@ namespace Discord_UWP.API.Channel
         Task AckMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
 
         [Put("/channels/{channelId}/permissions/{overwriteId}")]
-        Task EditChannelPermissions([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overWriteId);
+        Task EditChannelPermissions([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overwriteId, [Body] EditChannel editChannel);
+
+        [Get("/channels/{channelId}/invites")]
+        Task GetChannelInvites([AliasAs("channelId")] string channelId);
+
+        [Post("/channels/{channelId}/invites")]
+        Task CreateChannelInvite([AliasAs("channelId")] string channelId);
+
+        [Delete("/channels/{channelId}/permissions/{overwriteId}")]
+        Task DeleteChannelPermission([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overwriteId);
 
         [Post("/channels/{channelId}/typing")]
         Task TriggerTypingIndicator([AliasAs("channelId")] string channelId);
+
+        [Get("/channels/{channelId}/pins")]
+        Task GetPinnedMessages([AliasAs("channelId")] string channelId);
+
+        [Put("/channels/{channelId}/pins/{messageId}")]
+        Task AddPinnedChannelMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
+
+        [Delete("/channels/{channelId}/pins/{messageId}")]
+        Task DeletePinnedChannelMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
     }
 }
