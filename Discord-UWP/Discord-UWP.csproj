@@ -114,6 +114,16 @@
     <Compile Include="API\Channel\IChannelApi.cs" />
     <Compile Include="API\Channel\Models\MessageUpsert.cs" />
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
+    <Compile Include="SharedModels\Attachment.cs" />
+    <Compile Include="SharedModels\GuildChannel.cs" />
+    <Compile Include="SharedModels\DirectMessageChannel.cs" />
+    <Compile Include="SharedModels\Embed.cs" />
+    <Compile Include="SharedModels\Invite.cs" />
+    <Compile Include="SharedModels\InviteMetadata.cs" />
+    <Compile Include="SharedModels\Message.cs" />
+    <Compile Include="SharedModels\Overwrite.cs" />
+    <Compile Include="SharedModels\Role.cs" />
+    <Compile Include="SharedModels\User.cs" />
     <Compile Include="Authentication\IAuthenticator.cs" />
     <Compile Include="Authentication\DiscordAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
