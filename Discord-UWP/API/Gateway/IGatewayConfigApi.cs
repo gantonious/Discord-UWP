@@ -11,6 +11,6 @@ namespace Discord_UWP.API.Gateway
     public interface IGatewayConfigApi
     {
         [Get("/gateway")]
-        Task<GatewayConfig> GetGatwayConfig();
+        Task<GatewayConfig> GetGatewayConfig();
     }
 }
