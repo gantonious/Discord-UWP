@@ -16,7 +16,7 @@ namespace Discord_UWP.SharedModels
         [JsonProperty("author")]
         public User User { get; set; }
         [JsonProperty("content")]
-        public string String { get; set; }
+        public string Content { get; set; }
         [JsonProperty("timestamp")]
         public DateTime Timestamp { get; set; }
         [JsonProperty("edited_timestamp")]
@@ -34,7 +34,7 @@ namespace Discord_UWP.SharedModels
         [JsonProperty("embeds")]
         public IEnumerable<Embed> Embeds { get; set; }
         [JsonProperty("nonce")]
-        public int? Nonce { get; set; }
+        public long? Nonce { get; set; }
         [JsonProperty("pinned")]
         public bool Pinned { get; set; }
     }

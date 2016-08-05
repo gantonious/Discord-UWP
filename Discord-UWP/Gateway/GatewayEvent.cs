@@ -11,12 +11,18 @@ namespace Discord_UWP.Gateway
     public struct GatewayEvent
     {
         [JsonProperty("op")]
-        public string Operation { get; set; }
+        public int? Operation { get; set; }
         [JsonProperty("d")]
-        public JObject Data { get; set; }
+        public object Data { get; set; }
         [JsonProperty("s")]
         public int? SequenceNumber { get; set; }
         [JsonProperty("t")]
         public string Type { get; set; }
+
+        public T GetData<T>()
+        {
+            var dataAsJObject = Data as JObject;
+            return dataAsJObject.ToObject<T>();
+        }
     }
 }

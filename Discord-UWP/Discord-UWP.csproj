@@ -117,12 +117,17 @@
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
     <Compile Include="API\DiscordAPIConfiguration.cs" />
     <Compile Include="API\Gateway\IGatewayConfigApi.cs" />
+    <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
+    <Compile Include="Gateway\Gateway.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
     <Compile Include="Gateway\Sockets\IWebMessageSocket.cs" />
     <Compile Include="Gateway\Sockets\IWebSocketExtensions.cs" />
     <Compile Include="Gateway\Sockets\WebMessageSocket.cs" />
     <Compile Include="API\RestFactory.cs" />
     <Compile Include="API\User\Models\ModifyUser.cs" />
+    <Compile Include="Gateway\UpstreamEvents\Identify.cs" />
+    <Compile Include="Gateway\DownstreamEvents\Ready.cs" />
+    <Compile Include="Gateway\DownstreamEvents\Hello.cs"/>
     <Compile Include="SharedModels\Attachment.cs" />
     <Compile Include="SharedModels\Connection.cs" />
     <Compile Include="SharedModels\Emoji.cs" />
@@ -146,7 +151,6 @@
     <Compile Include="SharedModels\VoiceState.cs" />
     <EmbeddedResource Include="Properties\Discord_UWP.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
