@@ -132,6 +132,7 @@
     <Compile Include="SharedModels\Attachment.cs" />
     <Compile Include="SharedModels\Connection.cs" />
     <Compile Include="SharedModels\Emoji.cs" />
+    <Compile Include="SharedModels\Friend.cs" />
     <Compile Include="SharedModels\Game.cs" />
     <Compile Include="SharedModels\GatewayConfig.cs" />
     <Compile Include="SharedModels\Guild.cs" />

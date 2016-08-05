@@ -23,7 +23,7 @@ namespace Discord_UWP.Gateway.DownstreamEvents
         [JsonProperty("presences")]
         public IEnumerable<Presence> Presences { get; set; }
         [JsonProperty("relationships")]
-        public IEnumerable<User> Friends { get; set; }
+        public IEnumerable<Friend> Friends { get; set; }
         [JsonProperty("_trace")]
         public IEnumerable<string> Trace { get; set; }
     }
