@@ -68,7 +68,7 @@ namespace Discord_UWP.Gateway
         {
             return new Dictionary<int, GatewayEventHandler>
             {
-                { 10 , OnHelloReceived }
+                { OperationCode.Hello.ToInt() , OnHelloReceived }
             };
         }
 
@@ -128,7 +128,7 @@ namespace Discord_UWP.Gateway
             var identifyEvent = new GatewayEvent
             {
                 Type = "IDENTIFY",
-                Operation = 2,
+                Operation = OperationCode.Identify.ToInt(),
                 Data = identity
             };
 
@@ -176,7 +176,7 @@ namespace Discord_UWP.Gateway
         {
             var heartbeatEvent = new GatewayEvent
             {
-                Operation = 1,
+                Operation = OperationCode.Heartbeat.ToInt(),
                 Data = lastGatewayEvent.SequenceNumber ?? 0
             };
 
