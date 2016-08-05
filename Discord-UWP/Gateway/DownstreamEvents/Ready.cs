@@ -21,7 +21,7 @@ namespace Discord_UWP.Gateway.DownstreamEvents
         [JsonProperty("session_id")]
         public string SessionId { get; set; }
         [JsonProperty("presences")]
-        public IEnumerable<object> Presences { get; set; }
+        public IEnumerable<Presence> Presences { get; set; }
         [JsonProperty("relationships")]
         public IEnumerable<User> Friends { get; set; }
         [JsonProperty("_trace")]
