@@ -23,19 +23,19 @@ namespace Discord_UWP.API
             _authenticator = authenticator;
         }
 
-        public IUserApi GetUserApi()
+        public IUserService GetUserService()
         {
-            return RestService.For<IUserApi>(GetAuthenticatingHttpClient());
+            return RestService.For<IUserService>(GetAuthenticatingHttpClient());
         }
 
-        public IChannelApi GetChannelApi()
+        public IChannelService GetChannelService()
         {
-            return RestService.For<IChannelApi>(GetAuthenticatingHttpClient());
+            return RestService.For<IChannelService>(GetAuthenticatingHttpClient());
         }
 
-        public IGatewayConfigApi GetGatewayConfigApi()
+        public IGatewayConfigService GetGatewayConfigService()
         {
-            return RestService.For<IGatewayConfigApi>(GetBasicHttpClient());
+            return RestService.For<IGatewayConfigService>(GetBasicHttpClient());
         }
 
         private HttpClient GetBasicHttpClient()

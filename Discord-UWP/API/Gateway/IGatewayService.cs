@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Discord_UWP.API.Gateway
 {
-    public interface IGatewayConfigApi
+    public interface IGatewayConfigService
     {
         [Get("/gateway")]
         Task<GatewayConfig> GetGatewayConfig();

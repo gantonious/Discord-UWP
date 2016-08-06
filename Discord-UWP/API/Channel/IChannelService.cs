@@ -9,7 +9,7 @@ using Discord_UWP.SharedModels;
 
 namespace Discord_UWP.API.Channel
 {
-    public interface IChannelApi
+    public interface IChannelService
     {
         [Get("/channels/{channelId}")]
         Task GetChannel([AliasAs("channelId")] string channelId);

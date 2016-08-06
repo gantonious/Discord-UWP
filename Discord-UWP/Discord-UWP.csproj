@@ -112,11 +112,11 @@
     <Compile Include="API\Channel\Models\ChannelInvite.cs" />
     <Compile Include="API\Channel\Models\EditChannel.cs" />
     <Compile Include="API\Channel\Models\EditMessage.cs" />
-    <Compile Include="API\Channel\IChannelApi.cs" />
+    <Compile Include="API\Channel\IChannelService.cs" />
     <Compile Include="API\Channel\Models\MessageUpsert.cs" />
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
     <Compile Include="API\DiscordAPIConfiguration.cs" />
-    <Compile Include="API\Gateway\IGatewayConfigApi.cs" />
+    <Compile Include="API\Gateway\IGatewayService.cs" />
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
     <Compile Include="Gateway\Gateway.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="SharedModels\Presence.cs" />
     <Compile Include="SharedModels\Role.cs" />
     <Compile Include="SharedModels\User.cs" />
-    <Compile Include="API\User\IUserApi.cs" />
+    <Compile Include="API\User\IUserService.cs" />
     <Compile Include="SharedModels\UserGuild.cs" />
     <Compile Include="Authentication\IAuthenticator.cs" />
     <Compile Include="Authentication\DiscordAuthenticator.cs" />
