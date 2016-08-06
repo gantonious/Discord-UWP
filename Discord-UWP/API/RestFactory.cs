@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Discord_UWP.API.Gateway;
 
 namespace Discord_UWP.API
 {
@@ -30,6 +31,19 @@ namespace Discord_UWP.API
         public IChannelApi GetChannelApi()
         {
             return RestService.For<IChannelApi>(GetAuthenticatingHttpClient());
+        }
+
+        public IGatewayConfigApi GetGatewayConfigApi()
+        {
+            return RestService.For<IGatewayConfigApi>(GetBasicHttpClient());
+        }
+
+        private HttpClient GetBasicHttpClient()
+        {
+            return new HttpClient()
+            {
+                BaseAddress = new Uri(_apiConfig.BaseUrl)
+            };
         }
 
         private HttpClient GetAuthenticatingHttpClient()
