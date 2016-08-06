@@ -17,8 +17,6 @@ namespace Discord_UWP.Gateway.UpstreamEvents
         public bool Compress => false;
         [JsonProperty("large_threshold")]
         public int LargeThreshold { get; set; }
-        //[JsonProperty("shard")]
- 
     }
 
     public struct Properties
