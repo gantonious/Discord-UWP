@@ -117,6 +117,7 @@
     <Compile Include="API\Channel\Models\ModifyChannel.cs" />
     <Compile Include="API\DiscordAPIConfiguration.cs" />
     <Compile Include="API\Gateway\IGatewayService.cs" />
+    <Compile Include="API\Invite\IInviteService.cs" />
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
     <Compile Include="Gateway\Gateway.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
