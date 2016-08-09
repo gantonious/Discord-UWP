@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Discord_UWP.API.Gateway;
+using Discord_UWP.API.Guild;
+using Discord_UWP.API.Voice;
 
 namespace Discord_UWP.API
 {
@@ -31,6 +33,16 @@ namespace Discord_UWP.API
         public IChannelService GetChannelService()
         {
             return RestService.For<IChannelService>(GetAuthenticatingHttpClient());
+        }
+
+        public IGuildService GetGuildService()
+        {
+            return RestService.For<IGuildService>(GetAuthenticatingHttpClient());
+        }
+
+        public IVoiceService GetVoiceService()
+        {
+            return RestService.For<IVoiceService>(GetAuthenticatingHttpClient());
         }
 
         public IGatewayConfigService GetGatewayConfigService()
