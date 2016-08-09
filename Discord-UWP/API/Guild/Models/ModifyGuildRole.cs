@@ -11,7 +11,7 @@ namespace Discord_UWP.API.Guild.Models
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty("permission")]
+        [JsonProperty("permissions")]
         public int Permissions { get; set; }
         [JsonProperty("position")]
         public int Position { get; set; }
