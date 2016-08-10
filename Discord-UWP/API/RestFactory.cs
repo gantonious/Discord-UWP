@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Discord_UWP.API.Gateway;
 using Discord_UWP.API.Guild;
 using Discord_UWP.API.Voice;
+using Discord_UWP.API.Login;
 
 namespace Discord_UWP.API
 {
@@ -48,6 +49,11 @@ namespace Discord_UWP.API
         public IGatewayConfigService GetGatewayConfigService()
         {
             return RestService.For<IGatewayConfigService>(GetBasicHttpClient());
+        }
+
+        public ILoginService GetLoginService()
+        {
+            return RestService.For<ILoginService>(GetBasicHttpClient());
         }
 
         private HttpClient GetBasicHttpClient()

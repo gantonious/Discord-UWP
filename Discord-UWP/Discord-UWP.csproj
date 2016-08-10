@@ -128,6 +128,9 @@
     <Compile Include="API\Guild\Models\ModifyGuildRole.cs" />
     <Compile Include="API\Guild\Models\ModifyIntegration.cs" />
     <Compile Include="API\Invite\IInviteService.cs" />
+    <Compile Include="API\Login\ILoginService.cs" />
+    <Compile Include="API\Login\Models\LoginRequest.cs" />
+    <Compile Include="API\Login\Models\LoginResult.cs" />
     <Compile Include="API\Voice\IVoiceService.cs" />
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
     <Compile Include="Gateway\Gateway.cs" />
