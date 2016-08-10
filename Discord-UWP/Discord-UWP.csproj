@@ -132,6 +132,7 @@
     <Compile Include="API\Login\Models\LoginRequest.cs" />
     <Compile Include="API\Login\Models\LoginResult.cs" />
     <Compile Include="API\Voice\IVoiceService.cs" />
+    <Compile Include="Authentication\AuthenticationTicket.cs" />
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
     <Compile Include="Gateway\Gateway.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
