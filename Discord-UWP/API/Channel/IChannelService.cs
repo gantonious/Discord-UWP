@@ -9,7 +9,7 @@ using Discord_UWP.SharedModels;
 
 namespace Discord_UWP.API.Channel
 {
-    public interface IChannelApi
+    public interface IChannelService
     {
         [Get("/channels/{channelId}")]
         Task GetChannel([AliasAs("channelId")] string channelId);
@@ -45,10 +45,10 @@ namespace Discord_UWP.API.Channel
         Task EditChannelPermissions([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overwriteId, [Body] EditChannel editChannel);
 
         [Get("/channels/{channelId}/invites")]
-        Task<IEnumerable<Invite>> GetChannelInvites([AliasAs("channelId")] string channelId);
+        Task<IEnumerable<SharedModels.Invite>> GetChannelInvites([AliasAs("channelId")] string channelId);
 
         [Post("/channels/{channelId}/invites")]
-        Task<Invite> CreateChannelInvite([AliasAs("channelId")] string channelId);
+        Task<SharedModels.Invite> CreateChannelInvite([AliasAs("channelId")] string channelId);
 
         [Delete("/channels/{channelId}/permissions/{overwriteId}")]
         Task DeleteChannelPermission([AliasAs("channelId")] string channelId, [AliasAs("overwriteId")] string overwriteId);

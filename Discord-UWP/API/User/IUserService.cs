@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Discord_UWP.API.User
 {
-    public interface IUserApi
+    public interface IUserService
     {
         [Get("/users")]
         Task<IEnumerable<SharedModels.User>> GetUsers([AliasAs("q")] string usernameQuery, [AliasAs("limit")] int limit);
