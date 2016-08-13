@@ -15,11 +15,11 @@ namespace Discord_UWP.Gateway
 {
     public class GatewayEventArgs<T> : EventArgs
     {
-        public T EventPayload { get; }
+        public T EventData { get; }
 
-        public GatewayEventArgs(T eventPayload)
+        public GatewayEventArgs(T eventData)
         {
-            EventPayload = eventPayload;
+            EventData = eventData;
         }
     }
 
