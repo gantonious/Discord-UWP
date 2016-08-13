@@ -26,6 +26,9 @@ namespace Discord_UWP.API.Channel
         [Get("/channels/{channelId}/messages/{messageId)")]
         Task<Message> GetChannelMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
 
+        [Get("/channels/{channelId}/messages")]
+        Task<IEnumerable<Message>> GetChannelMessages([AliasAs("channelId")] string channelId);
+
         [Post("/channels/{channelId}/messages")]
         Task<Message> CreateMessage([AliasAs("channelId")] string channelId, [Body] MessageUpsert message);
 
