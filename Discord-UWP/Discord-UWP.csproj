@@ -136,6 +136,7 @@
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
     <Compile Include="Gateway\Gateway.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
+    <Compile Include="Gateway\IGateway.cs" />
     <Compile Include="Gateway\OperationCode.cs" />
     <Compile Include="Gateway\Sockets\IWebMessageSocket.cs" />
     <Compile Include="Gateway\Sockets\IWebSocketExtensions.cs" />

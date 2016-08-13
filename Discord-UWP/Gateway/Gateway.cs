@@ -23,14 +23,8 @@ namespace Discord_UWP.Gateway
         }
     }
 
-    public class Gateway
+    public class Gateway : IGateway
     {
-        public event EventHandler<GatewayEventArgs<Ready>> Ready;
-
-        public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
-        public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
-        public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
-
         private delegate void GatewayEventHandler(GatewayEvent gatewayEvent);
 
         private IDictionary<int, GatewayEventHandler> operationHandlers;
@@ -41,6 +35,11 @@ namespace Discord_UWP.Gateway
         private readonly IWebMessageSocket _webMessageSocket;
         private readonly IAuthenticator _authenticator;
         private readonly GatewayConfig _gatewayConfig;
+
+        public event EventHandler<GatewayEventArgs<Ready>> Ready;
+        public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
+        public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
+        public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
 
         public Gateway(GatewayConfig config, IAuthenticator authenticator)
         {
@@ -59,7 +58,7 @@ namespace Discord_UWP.Gateway
             _webMessageSocket.MessageReceived += OnSocketMessageReceived;
         }
 
-        public async Task Connect()
+        public async Task ConnectAsync()
         {
             await _webMessageSocket.ConnectAsync(_gatewayConfig.GetFullGatewayUrl("json", "6"));
         }
