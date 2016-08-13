@@ -15,7 +15,7 @@ namespace Discord_UWP.Gateway
 {
     public class GatewayEventArgs<T> : EventArgs
     {
-        public T EventPayload { get; set; }
+        public T EventPayload { get; }
 
         public GatewayEventArgs(T eventPayload)
         {
@@ -51,7 +51,7 @@ namespace Discord_UWP.Gateway
 
             eventHandlers = GetEventHandlers();
             operationHandlers = GetOperationHandlers();
-
+          
             PrepareSocket();
         }
 
