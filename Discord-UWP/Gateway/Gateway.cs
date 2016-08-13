@@ -93,10 +93,10 @@ namespace Discord_UWP.Gateway
         {
             return new Dictionary<string, GatewayEventHandler>
             {
-                { "READY", OnReady },
-                { "MESSAGE_CREATE", OnMessageCreated },
-                { "MESSAGE_UPDATE", OnMessageUpdated },
-                { "MESSAGE_DELETE", OnMessageDeleted }
+                { EventNames.READY, OnReady },
+                { EventNames.MESSAGE_CREATED, OnMessageCreated },
+                { EventNames.MESSAGE_UPDATED, OnMessageUpdated },
+                { EventNames.MESSAGE_DELETED, OnMessageDeleted }
             };
         }
 
@@ -144,7 +144,7 @@ namespace Discord_UWP.Gateway
 
             var identifyEvent = new GatewayEvent
             {
-                Type = "IDENTIFY",
+                Type = EventNames.IDENTIFY,
                 Operation = OperationCode.Identify.ToInt(),
                 Data = identity
             };

@@ -135,6 +135,7 @@
     <Compile Include="Authentication\AuthenticationTicket.cs" />
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
     <Compile Include="Gateway\DownstreamEvents\Resumed.cs" />
+    <Compile Include="Gateway\EventNames.cs" />
     <Compile Include="Gateway\Gateway.cs" />
     <Compile Include="Gateway\GatewayEvent.cs" />
     <Compile Include="Gateway\IGateway.cs" />
