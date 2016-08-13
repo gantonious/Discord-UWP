@@ -37,6 +37,8 @@ namespace Discord_UWP.Gateway
         private readonly GatewayConfig _gatewayConfig;
 
         public event EventHandler<GatewayEventArgs<Ready>> Ready;
+        public event EventHandler<GatewayEventArgs<Resumed>> Resumed;
+
         public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
         public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
         public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
@@ -67,7 +69,8 @@ namespace Discord_UWP.Gateway
         {
             return new Dictionary<int, GatewayEventHandler>
             {
-                { OperationCode.Hello.ToInt() , OnHelloReceived }
+                { OperationCode.Hello.ToInt(), OnHelloReceived },
+                { OperationCode.Resume.ToInt(), OnResumeReceived }
             };
         }
 
@@ -132,6 +135,13 @@ namespace Discord_UWP.Gateway
             };
 
             await _webMessageSocket.SendJsonObjectAsync(identifyEvent);
+        }
+
+        public void OnResumeReceived(GatewayEvent gatewayEvent)
+        {
+            var resumedEvent = new GatewayEventArgs<Resumed>(gatewayEvent.GetData<Resumed>());
+
+            Resumed?.Invoke(this, resumedEvent);
         }
 
         private void OnReady(GatewayEvent gatewayEvent)
