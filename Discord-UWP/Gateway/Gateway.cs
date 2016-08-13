@@ -30,7 +30,8 @@ namespace Discord_UWP.Gateway
         private IDictionary<int, GatewayEventHandler> operationHandlers;
         private IDictionary<string, GatewayEventHandler> eventHandlers;
 
-        private GatewayEvent lastGatewayEvent;
+        private Ready? lastReady;
+        private GatewayEvent? lastGatewayEvent;
 
         private readonly IWebMessageSocket _webMessageSocket;
         private readonly IAuthenticator _authenticator;
@@ -63,6 +64,20 @@ namespace Discord_UWP.Gateway
         public async Task ConnectAsync()
         {
             await _webMessageSocket.ConnectAsync(_gatewayConfig.GetFullGatewayUrl("json", "6"));
+        }
+
+        public async Task ResumeAsync()
+        {
+            var token = await _authenticator.GetToken();
+
+            var resume = new GatewayResume
+            {
+                Token = token,
+                SessionId = lastReady?.SessionId,
+                LastSequenceNumberReceived = lastGatewayEvent?.SequenceNumber.Value ?? 0
+            };
+
+            await _webMessageSocket.SendJsonObjectAsync(token);
         }
 
         private IDictionary<int, GatewayEventHandler> GetOperationHandlers()
@@ -144,6 +159,9 @@ namespace Discord_UWP.Gateway
 
         private void OnReady(GatewayEvent gatewayEvent)
         {
+            var ready = gatewayEvent.GetData<Ready>();
+            lastReady = ready;
+
             FireEventOnDelegate(gatewayEvent, Ready);
         }
 
@@ -182,7 +200,7 @@ namespace Discord_UWP.Gateway
             var heartbeatEvent = new GatewayEvent
             {
                 Operation = OperationCode.Heartbeat.ToInt(),
-                Data = lastGatewayEvent.SequenceNumber ?? 0
+                Data = lastGatewayEvent?.SequenceNumber ?? 0
             };
 
             await _webMessageSocket.SendJsonObjectAsync(heartbeatEvent);

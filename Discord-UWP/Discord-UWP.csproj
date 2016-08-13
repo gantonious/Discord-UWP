@@ -144,6 +144,7 @@
     <Compile Include="Gateway\Sockets\WebMessageSocket.cs" />
     <Compile Include="API\RestFactory.cs" />
     <Compile Include="API\User\Models\ModifyUser.cs" />
+    <Compile Include="Gateway\UpstreamEvents\GatewayResume.cs" />
     <Compile Include="Gateway\UpstreamEvents\Identify.cs" />
     <Compile Include="Gateway\DownstreamEvents\Ready.cs" />
     <Compile Include="Gateway\DownstreamEvents\Hello.cs" />

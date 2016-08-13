@@ -18,5 +18,6 @@ namespace Discord_UWP.Gateway
         event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
 
         Task ConnectAsync();
+        Task ResumeAsync();
     }
 }
