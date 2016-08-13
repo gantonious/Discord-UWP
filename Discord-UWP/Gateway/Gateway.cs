@@ -139,37 +139,33 @@ namespace Discord_UWP.Gateway
 
         public void OnResumeReceived(GatewayEvent gatewayEvent)
         {
-            var resumedEvent = new GatewayEventArgs<Resumed>(gatewayEvent.GetData<Resumed>());
-
-            Resumed?.Invoke(this, resumedEvent);
+            FireEventOnDelegate(gatewayEvent, Resumed);
         }
 
         private void OnReady(GatewayEvent gatewayEvent)
         {
-            var readyEvent = new GatewayEventArgs<Ready>(gatewayEvent.GetData<Ready>());
-
-            Ready?.Invoke(this, readyEvent);
+            FireEventOnDelegate(gatewayEvent, Ready);
         }
 
         private void OnMessageCreated(GatewayEvent gatewayEvent)
         {
-            var messageCreatedEvent = new GatewayEventArgs<Message>(gatewayEvent.GetData<Message>());
-
-            MessageCreated?.Invoke(this, messageCreatedEvent);
+            FireEventOnDelegate(gatewayEvent, MessageCreated);
         }
 
         private void OnMessageUpdated(GatewayEvent gatewayEvent)
         {
-            var messageUpdatedEvent = new GatewayEventArgs<Message>(gatewayEvent.GetData<Message>());
-
-            MessageUpdated?.Invoke(this, messageUpdatedEvent);
+            FireEventOnDelegate(gatewayEvent, MessageUpdated);
         }
 
         private void OnMessageDeleted(GatewayEvent gatewayEvent)
         {
-            var messageDeletedEvent = new GatewayEventArgs<MessageDelete>(gatewayEvent.GetData<MessageDelete>());
+            FireEventOnDelegate(gatewayEvent, MessageDeleted);
+        }
 
-            MessageDeleted?.Invoke(this, messageDeletedEvent);
+        private void FireEventOnDelegate<TEventData>(GatewayEvent gatewayEvent, EventHandler<GatewayEventArgs<TEventData>> eventHandler)
+        {
+            var eventArgs = new GatewayEventArgs<TEventData>(gatewayEvent.GetData<TEventData>());
+            eventHandler?.Invoke(this, eventArgs);
         }
 
         private async void BeginHeartbeat(int interval)
