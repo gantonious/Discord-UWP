@@ -13,6 +13,9 @@ namespace Discord_UWP.Gateway
         event EventHandler<GatewayEventArgs<Ready>> Ready;
         event EventHandler<GatewayEventArgs<Resumed>> Resumed;
 
+        event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelCreated;
+        event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
+
         event EventHandler<GatewayEventArgs<Message>> MessageCreated;
         event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
         event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;

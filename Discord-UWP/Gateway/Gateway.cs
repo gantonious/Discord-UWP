@@ -40,6 +40,9 @@ namespace Discord_UWP.Gateway
         public event EventHandler<GatewayEventArgs<Ready>> Ready;
         public event EventHandler<GatewayEventArgs<Resumed>> Resumed;
 
+        public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelCreated;
+        public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
+
         public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
         public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
         public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
@@ -72,7 +75,8 @@ namespace Discord_UWP.Gateway
                 { EventNames.READY, OnReady },
                 { EventNames.MESSAGE_CREATED, OnMessageCreated },
                 { EventNames.MESSAGE_UPDATED, OnMessageUpdated },
-                { EventNames.MESSAGE_DELETED, OnMessageDeleted }
+                { EventNames.MESSAGE_DELETED, OnMessageDeleted },
+                { EventNames.CHANNEL_CREATED, OnChannelCreated }
             };
         }
 
@@ -184,6 +188,21 @@ namespace Discord_UWP.Gateway
         private void OnMessageDeleted(GatewayEvent gatewayEvent)
         {
             FireEventOnDelegate(gatewayEvent, MessageDeleted);
+        }
+
+        public void OnChannelCreated(GatewayEvent gatewayEvent)
+        {
+            if (IsChannelAGuildChannel(gatewayEvent))
+            {
+                FireEventOnDelegate(gatewayEvent, GuildChannelCreated);
+            }
+            FireEventOnDelegate(gatewayEvent, DirectMessageChannelCreated);
+        }
+
+        private bool IsChannelAGuildChannel(GatewayEvent gatewayEvent)
+        {
+            var dataAsJObject = gatewayEvent.Data as JObject;
+            return dataAsJObject["guild_id"] != null;
         }
 
         private void FireEventOnDelegate<TEventData>(GatewayEvent gatewayEvent, EventHandler<GatewayEventArgs<TEventData>> eventHandler)

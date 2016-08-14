@@ -13,5 +13,6 @@ namespace Discord_UWP.Gateway
         public const string MESSAGE_CREATED = "MESSAGE_CREATE";
         public const string MESSAGE_UPDATED = "MESSAGE_UPDATE";
         public const string MESSAGE_DELETED = "MESSAGE_DELETE";
+        public const string CHANNEL_CREATED = "CHANNEL_CREATE";
     }
 }
