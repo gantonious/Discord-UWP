@@ -15,32 +15,34 @@ namespace Discord_UWP.Gateway
 {
     public class GatewayEventArgs<T> : EventArgs
     {
-        public T EventPayload { get; set; }
+        public T EventData { get; }
 
-        public GatewayEventArgs(T eventPayload)
+        public GatewayEventArgs(T eventData)
         {
-            EventPayload = eventPayload;
+            EventData = eventData;
         }
     }
 
-    public class Gateway
+    public class Gateway : IGateway
     {
-        public event EventHandler<GatewayEventArgs<Ready>> Ready;
-
-        public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
-        public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
-        public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
-
         private delegate void GatewayEventHandler(GatewayEvent gatewayEvent);
 
         private IDictionary<int, GatewayEventHandler> operationHandlers;
         private IDictionary<string, GatewayEventHandler> eventHandlers;
 
-        private GatewayEvent lastGatewayEvent;
+        private Ready? lastReady;
+        private GatewayEvent? lastGatewayEvent;
 
         private readonly IWebMessageSocket _webMessageSocket;
         private readonly IAuthenticator _authenticator;
         private readonly GatewayConfig _gatewayConfig;
+
+        public event EventHandler<GatewayEventArgs<Ready>> Ready;
+        public event EventHandler<GatewayEventArgs<Resumed>> Resumed;
+
+        public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
+        public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
+        public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
 
         public Gateway(GatewayConfig config, IAuthenticator authenticator)
         {
@@ -50,25 +52,16 @@ namespace Discord_UWP.Gateway
 
             eventHandlers = GetEventHandlers();
             operationHandlers = GetOperationHandlers();
-
+          
             PrepareSocket();
-        }
-
-        private void PrepareSocket()
-        {
-            _webMessageSocket.MessageReceived += OnSocketMessageReceived;
-        }
-
-        public async Task Connect()
-        {
-            await _webMessageSocket.ConnectAsync(_gatewayConfig.GetFullGatewayUrl("json", "6"));
         }
 
         private IDictionary<int, GatewayEventHandler> GetOperationHandlers()
         {
             return new Dictionary<int, GatewayEventHandler>
             {
-                { OperationCode.Hello.ToInt() , OnHelloReceived }
+                { OperationCode.Hello.ToInt(), OnHelloReceived },
+                { OperationCode.Resume.ToInt(), OnResumeReceived }
             };
         }
 
@@ -76,11 +69,36 @@ namespace Discord_UWP.Gateway
         {
             return new Dictionary<string, GatewayEventHandler>
             {
-                { "READY", OnReady },
-                { "MESSAGE_CREATE", OnMessageCreated },
-                { "MESSAGE_UPDATE", OnMessageUpdated },
-                { "MESSAGE_DELETE", OnMessageDeleted }
+                { EventNames.READY, OnReady },
+                { EventNames.MESSAGE_CREATED, OnMessageCreated },
+                { EventNames.MESSAGE_UPDATED, OnMessageUpdated },
+                { EventNames.MESSAGE_DELETED, OnMessageDeleted }
             };
+        }
+
+        private void PrepareSocket()
+        {
+            _webMessageSocket.MessageReceived += OnSocketMessageReceived;
+        }
+
+        public async Task ConnectAsync()
+        {
+            await _webMessageSocket.ConnectAsync(_gatewayConfig.GetFullGatewayUrl("json", "6"));
+        }
+
+        // TODO: good chance the socket will be disposed when attempting to resume so yah
+        public async Task ResumeAsync()
+        {
+            var token = await _authenticator.GetToken();
+
+            var resume = new GatewayResume
+            {
+                Token = token,
+                SessionId = lastReady?.SessionId,
+                LastSequenceNumberReceived = lastGatewayEvent?.SequenceNumber.Value ?? 0
+            };
+
+            await _webMessageSocket.SendJsonObjectAsync(token);
         }
 
         private void OnSocketMessageReceived(object sender, MessageReceivedEventArgs args)
@@ -102,14 +120,35 @@ namespace Discord_UWP.Gateway
         private void OnHelloReceived(GatewayEvent gatewayEvent)
         {
             IdentifySelfToGateway();
-            BeginHeartbeat(gatewayEvent.GetData<Hello>().HeartbeatInterval);
+            BeginHeartbeatAsync(gatewayEvent.GetData<Hello>().HeartbeatInterval);
         }
 
         private async void IdentifySelfToGateway()
         {
-            var authToken = await _authenticator.GetToken();
+            var identifyEvent = new GatewayEvent
+            {
+                Type = EventNames.IDENTIFY,
+                Operation = OperationCode.Identify.ToInt(),
+                Data = await GetIdentityAsync()
+            };
 
-            var properties = new Properties
+            await _webMessageSocket.SendJsonObjectAsync(identifyEvent);
+        }
+
+        private async Task<Identify> GetIdentityAsync()
+        {
+            return new Identify
+            {
+                Token = await _authenticator.GetToken(),
+                Properties = GetClientProperties(),
+                LargeThreshold = 50
+            };
+        }
+
+        // TODO: move propeties to config
+        private Properties GetClientProperties()
+        {
+            return new Properties
             {
                 OS = "DISCORD-UWP",
                 Device = "DISCORD-UWP",
@@ -117,67 +156,57 @@ namespace Discord_UWP.Gateway
                 Referrer = "",
                 ReferringDomain = ""
             };
+        }
 
-            var identity = new Identify
-            {
-                Token = authToken,
-                Properties = properties,
-                LargeThreshold = 50
-            };
-
-            var identifyEvent = new GatewayEvent
-            {
-                Type = "IDENTIFY",
-                Operation = OperationCode.Identify.ToInt(),
-                Data = identity
-            };
-
-            await _webMessageSocket.SendJsonObjectAsync(identifyEvent);
+        private void OnResumeReceived(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, Resumed);
         }
 
         private void OnReady(GatewayEvent gatewayEvent)
         {
-            var readyEvent = new GatewayEventArgs<Ready>(gatewayEvent.GetData<Ready>());
+            var ready = gatewayEvent.GetData<Ready>();
+            lastReady = ready;
 
-            Ready?.Invoke(this, readyEvent);
+            FireEventOnDelegate(gatewayEvent, Ready);
         }
 
         private void OnMessageCreated(GatewayEvent gatewayEvent)
         {
-            var messageCreatedEvent = new GatewayEventArgs<Message>(gatewayEvent.GetData<Message>());
-
-            MessageCreated?.Invoke(this, messageCreatedEvent);
+            FireEventOnDelegate(gatewayEvent, MessageCreated);
         }
 
         private void OnMessageUpdated(GatewayEvent gatewayEvent)
         {
-            var messageUpdatedEvent = new GatewayEventArgs<Message>(gatewayEvent.GetData<Message>());
-
-            MessageUpdated?.Invoke(this, messageUpdatedEvent);
+            FireEventOnDelegate(gatewayEvent, MessageUpdated);
         }
 
         private void OnMessageDeleted(GatewayEvent gatewayEvent)
         {
-            var messageDeletedEvent = new GatewayEventArgs<MessageDelete>(gatewayEvent.GetData<MessageDelete>());
-
-            MessageDeleted?.Invoke(this, messageDeletedEvent);
+            FireEventOnDelegate(gatewayEvent, MessageDeleted);
         }
 
-        private async void BeginHeartbeat(int interval)
+        private void FireEventOnDelegate<TEventData>(GatewayEvent gatewayEvent, EventHandler<GatewayEventArgs<TEventData>> eventHandler)
+        {
+            var eventArgs = new GatewayEventArgs<TEventData>(gatewayEvent.GetData<TEventData>());
+            eventHandler?.Invoke(this, eventArgs);
+        }
+
+        private async void BeginHeartbeatAsync(int interval)
         {
             while (true)
             {
                 await Task.Delay(interval);
-                await SendHeartbeat();
+                await SendHeartbeatAsync();
             }
         }
 
-        private async Task SendHeartbeat()
+        private async Task SendHeartbeatAsync()
         {
             var heartbeatEvent = new GatewayEvent
             {
                 Operation = OperationCode.Heartbeat.ToInt(),
-                Data = lastGatewayEvent.SequenceNumber ?? 0
+                Data = lastGatewayEvent?.SequenceNumber ?? 0
             };
 
             await _webMessageSocket.SendJsonObjectAsync(heartbeatEvent);
