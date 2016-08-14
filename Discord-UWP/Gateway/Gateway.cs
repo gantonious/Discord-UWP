@@ -137,11 +137,9 @@ namespace Discord_UWP.Gateway
 
         private async Task<Identify> GetIdentityAsync()
         {
-            var authToken = await _authenticator.GetToken();
-
             return new Identify
             {
-                Token = authToken,
+                Token = await _authenticator.GetToken(),
                 Properties = GetClientProperties(),
                 LargeThreshold = 50
             };
