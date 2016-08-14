@@ -160,7 +160,7 @@ namespace Discord_UWP.Gateway
             };
         }
 
-        public void OnResumeReceived(GatewayEvent gatewayEvent)
+        private void OnResumeReceived(GatewayEvent gatewayEvent)
         {
             FireEventOnDelegate(gatewayEvent, Resumed);
         }
