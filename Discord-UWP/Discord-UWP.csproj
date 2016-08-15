@@ -134,6 +134,9 @@
     <Compile Include="API\Voice\IVoiceService.cs" />
     <Compile Include="Authentication\AuthenticationTicket.cs" />
     <Compile Include="Gateway\DownstreamEvents\MessageDelete.cs" />
+    <Compile Include="Gateway\DownstreamEvents\GuildDelete.cs" />
+    <Compile Include="Gateway\DownstreamEvents\GuildEmojiUpdate.cs" />
+    <Compile Include="Gateway\DownstreamEvents\GuildIntegrationUpdate.cs" />
     <Compile Include="Gateway\DownstreamEvents\Resumed.cs" />
     <Compile Include="Gateway\EventNames.cs" />
     <Compile Include="Gateway\Gateway.cs" />
