@@ -203,7 +203,10 @@ namespace Discord_UWP.Gateway
             {
                 FireEventOnDelegate(gatewayEvent, GuildChannelCreated);
             }
-            FireEventOnDelegate(gatewayEvent, DirectMessageChannelCreated);
+            else
+            {
+                FireEventOnDelegate(gatewayEvent, DirectMessageChannelCreated);
+            }
         }
 
         private void OnChannelUpdated(GatewayEvent gatewayEvent)
@@ -217,7 +220,10 @@ namespace Discord_UWP.Gateway
             {
                 FireEventOnDelegate(gatewayEvent, GuildChannelDeleted);
             }
-            FireEventOnDelegate(gatewayEvent, DirectMessageChannelDeleted);
+            else
+            {
+                FireEventOnDelegate(gatewayEvent, DirectMessageChannelDeleted);
+            }
         }
 
         private bool IsChannelAGuildChannel(GatewayEvent gatewayEvent)
@@ -232,6 +238,7 @@ namespace Discord_UWP.Gateway
             eventHandler?.Invoke(this, eventArgs);
         }
 
+        // TODO: dont while true and query connection state or use cancelation token or something
         private async void BeginHeartbeatAsync(int interval)
         {
             while (true)
