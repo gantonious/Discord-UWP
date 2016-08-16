@@ -43,6 +43,11 @@ namespace Discord_UWP.Gateway
         public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelCreated;
         public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
 
+        public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelUpdated;
+
+        public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelDeleted;
+        public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelDeleted;
+
         public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
         public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
         public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
@@ -76,7 +81,9 @@ namespace Discord_UWP.Gateway
                 { EventNames.MESSAGE_CREATED, OnMessageCreated },
                 { EventNames.MESSAGE_UPDATED, OnMessageUpdated },
                 { EventNames.MESSAGE_DELETED, OnMessageDeleted },
-                { EventNames.CHANNEL_CREATED, OnChannelCreated }
+                { EventNames.CHANNEL_CREATED, OnChannelCreated },
+                { EventNames.CHANNEL_UPDATED, OnChannelUpdated },
+                { EventNames.CHANNEL_DELETED, OnChannelDeleted }
             };
         }
 
@@ -197,6 +204,20 @@ namespace Discord_UWP.Gateway
                 FireEventOnDelegate(gatewayEvent, GuildChannelCreated);
             }
             FireEventOnDelegate(gatewayEvent, DirectMessageChannelCreated);
+        }
+
+        private void OnChannelUpdated(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildChannelUpdated);
+        }
+
+        private void OnChannelDeleted(GatewayEvent gatewayEvent)
+        {
+            if (IsChannelAGuildChannel(gatewayEvent))
+            {
+                FireEventOnDelegate(gatewayEvent, GuildChannelDeleted);
+            }
+            FireEventOnDelegate(gatewayEvent, DirectMessageChannelDeleted);
         }
 
         private bool IsChannelAGuildChannel(GatewayEvent gatewayEvent)
