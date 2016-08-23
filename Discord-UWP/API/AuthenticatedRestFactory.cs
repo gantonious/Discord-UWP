@@ -3,24 +3,19 @@ using Discord_UWP.API.Channel;
 using Discord_UWP.Authentication;
 using Refit;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Discord_UWP.API.Gateway;
 using Discord_UWP.API.Guild;
 using Discord_UWP.API.Voice;
-using Discord_UWP.API.Login;
 
 namespace Discord_UWP.API
 {
-    public class RestFactory
+    public class AuthenticatedRestFactory
     {
         private readonly IAuthenticator _authenticator;
         private readonly DiscordApiConfiguration _apiConfig;
         
-        public RestFactory(DiscordApiConfiguration config, IAuthenticator authenticator)
+        public AuthenticatedRestFactory(DiscordApiConfiguration config, IAuthenticator authenticator)
         {
             _apiConfig = config;
             _authenticator = authenticator;
@@ -44,24 +39,6 @@ namespace Discord_UWP.API
         public IVoiceService GetVoiceService()
         {
             return RestService.For<IVoiceService>(GetAuthenticatingHttpClient());
-        }
-
-        public IGatewayConfigService GetGatewayConfigService()
-        {
-            return RestService.For<IGatewayConfigService>(GetBasicHttpClient());
-        }
-
-        public ILoginService GetLoginService()
-        {
-            return RestService.For<ILoginService>(GetBasicHttpClient());
-        }
-
-        private HttpClient GetBasicHttpClient()
-        {
-            return new HttpClient()
-            {
-                BaseAddress = new Uri(_apiConfig.BaseUrl)
-            };
         }
 
         private HttpClient GetAuthenticatingHttpClient()
