@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\AuthenticatingHttpClientHandler.cs" />
+    <Compile Include="API\BasicRestFactory.cs" />
     <Compile Include="API\Channel\Models\BulkDelete.cs" />
     <Compile Include="API\Channel\Models\ChannelInvite.cs" />
     <Compile Include="API\Channel\Models\EditChannel.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="Gateway\Sockets\IWebMessageSocket.cs" />
     <Compile Include="Gateway\Sockets\IWebSocketExtensions.cs" />
     <Compile Include="Gateway\Sockets\WebMessageSocket.cs" />
-    <Compile Include="API\RestFactory.cs" />
+    <Compile Include="API\AuthenticatedRestFactory.cs" />
     <Compile Include="API\User\Models\ModifyUser.cs" />
     <Compile Include="Gateway\UpstreamEvents\GatewayResume.cs" />
     <Compile Include="Gateway\UpstreamEvents\Identify.cs" />
