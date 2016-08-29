@@ -17,7 +17,7 @@ IGatewayService gatewayService = basicRestFactory.GetGatewayService();
 Authentication
 ---
 
-Note: This is not the planned implmentation of the Authentication layer, this is just a bandaid solution till time is found to work on it.
+Note: This is not the planned implantation of the Authentication layer, this is just a band-aid solution till time is found to work on it.
 ```csharp
 LoginRequest loginRequest = new LoginRequest
 {
@@ -27,7 +27,7 @@ LoginRequest loginRequest = new LoginRequest
 
 LoginResult loginResult = await loginService.Login(loginRequest);
 
-IAuthenticator discordAuthenticator = new DiscordAuthenticator(loginResult.Token);
+IAuthenticator authenticator = new DiscordAuthenticator(loginResult.Token);
 ```
 
 Authenticated Api Services:
@@ -50,7 +50,7 @@ To create a Gateway instance, you need a `GatewayConfig` and an `IAuthenticator`
 ```csharp
 GatewayConfig config = await gatewayService.GetGatewayConfigAsync();
 
-Gateway gateway = new Gateway(config, discordAuthenticator);
+Gateway gateway = new Gateway(config, authenticator);
 ```
 
 To connect just call:
@@ -59,12 +59,19 @@ To connect just call:
 await gateway.ConnectAsync();
 ```
 
-Then events can be listend to as follows:
+Then events can be listened to as follows:
 
 ```csharp
-gateway.MessageCreated += (o, e) => 
+gateway.MessageCreated += (sender, e) => 
 { 
     Message message = e.EventPayload;
     // Handle message
 };
 ```
+
+Future Plans
+===
+- Finish implementing all gateway events
+- Make authentication layer so it can securely store authentication state
+- Implement Voice
+- Remove Universal Windows dependencies and only depend on .NETCore
