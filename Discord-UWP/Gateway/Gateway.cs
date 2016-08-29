@@ -40,6 +40,17 @@ namespace Discord_UWP.Gateway
         public event EventHandler<GatewayEventArgs<Ready>> Ready;
         public event EventHandler<GatewayEventArgs<Resumed>> Resumed;
 
+        public event EventHandler<GatewayEventArgs<Guild>> GuildCreated;
+        public event EventHandler<GatewayEventArgs<Guild>> GuildUpdated;
+        public event EventHandler<GatewayEventArgs<GuildDelete>> GuildDeleted;
+
+        public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelCreated;
+        public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelUpdated;
+        public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelDeleted;
+
+        public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
+        public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelDeleted;
+
         public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
         public event EventHandler<GatewayEventArgs<Message>> MessageUpdated;
         public event EventHandler<GatewayEventArgs<MessageDelete>> MessageDeleted;
@@ -70,9 +81,15 @@ namespace Discord_UWP.Gateway
             return new Dictionary<string, GatewayEventHandler>
             {
                 { EventNames.READY, OnReady },
+                { EventNames.GUILD_CREATED, OnGuildCreated },
+                { EventNames.GUILD_UPDATED, OnGuildUpdated },
+                { EventNames.GUILD_DELETED, OnGuildDeleted },
                 { EventNames.MESSAGE_CREATED, OnMessageCreated },
                 { EventNames.MESSAGE_UPDATED, OnMessageUpdated },
-                { EventNames.MESSAGE_DELETED, OnMessageDeleted }
+                { EventNames.MESSAGE_DELETED, OnMessageDeleted },
+                { EventNames.CHANNEL_CREATED, OnChannelCreated },
+                { EventNames.CHANNEL_UPDATED, OnChannelUpdated },
+                { EventNames.CHANNEL_DELETED, OnChannelDeleted }
             };
         }
 
@@ -186,12 +203,63 @@ namespace Discord_UWP.Gateway
             FireEventOnDelegate(gatewayEvent, MessageDeleted);
         }
 
+        public void OnChannelCreated(GatewayEvent gatewayEvent)
+        {
+            if (IsChannelAGuildChannel(gatewayEvent))
+            {
+                FireEventOnDelegate(gatewayEvent, GuildChannelCreated);
+            }
+            else
+            {
+                FireEventOnDelegate(gatewayEvent, DirectMessageChannelCreated);
+            }
+        }
+
+        private void OnChannelUpdated(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildChannelUpdated);
+        }
+
+        private void OnChannelDeleted(GatewayEvent gatewayEvent)
+        {
+            if (IsChannelAGuildChannel(gatewayEvent))
+            {
+                FireEventOnDelegate(gatewayEvent, GuildChannelDeleted);
+            }
+            else
+            {
+                FireEventOnDelegate(gatewayEvent, DirectMessageChannelDeleted);
+            }
+        }
+
+        private bool IsChannelAGuildChannel(GatewayEvent gatewayEvent)
+        {
+            var dataAsJObject = gatewayEvent.Data as JObject;
+            return dataAsJObject["guild_id"] != null;
+        }
+
+        private void OnGuildCreated(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildCreated);
+        }
+
+        private void OnGuildUpdated(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildUpdated);
+        }
+
+        private void OnGuildDeleted(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildDeleted);
+        }
+
         private void FireEventOnDelegate<TEventData>(GatewayEvent gatewayEvent, EventHandler<GatewayEventArgs<TEventData>> eventHandler)
         {
             var eventArgs = new GatewayEventArgs<TEventData>(gatewayEvent.GetData<TEventData>());
             eventHandler?.Invoke(this, eventArgs);
         }
 
+        // TODO: dont while true and query connection state or use cancelation token or something
         private async void BeginHeartbeatAsync(int interval)
         {
             while (true)
