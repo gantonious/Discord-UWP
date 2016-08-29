@@ -13,12 +13,15 @@ namespace Discord_UWP.Gateway
         event EventHandler<GatewayEventArgs<Ready>> Ready;
         event EventHandler<GatewayEventArgs<Resumed>> Resumed;
 
+        event EventHandler<GatewayEventArgs<Guild>> GuildCreated;
+        event EventHandler<GatewayEventArgs<Guild>> GuildUpdated;
+        event EventHandler<GatewayEventArgs<GuildDelete>> GuildDeleted;
+
         event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelCreated;
-        event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
-
         event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelUpdated;
-
         event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelDeleted;
+
+        event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
         event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelDeleted;
 
         event EventHandler<GatewayEventArgs<Message>> MessageCreated;
