@@ -3,9 +3,10 @@ Discord-UWP [![Build status](https://ci.appveyor.com/api/projects/status/2ansr6w
 
 A Discord wrapper in C# compatible with UWP.
 
-API Services
+Basic Api Services:
 ---
-Anonymous:
+
+Api services that do not require authentication can be accessed by doing:
 ```csharp
 BasicRestFactory basicRestFactory = new BasicRestFactory();
 
@@ -13,7 +14,25 @@ ILoginService loginService = basicRestFactory.GetLoginService();
 IGatewayService gatewayService = basicRestFactory.GetGatewayService();
 ```
 
-Authenticated (Requires an `IAuthenticator`):
+Authentication
+---
+
+Note: This is not the planned implmentation of the Authentication layer, this is just a bandaid solution till time is found to work on it.
+```csharp
+LoginRequest loginRequest = new LoginRequest
+{
+    Email = "EMAIL",
+    Password = "PASSWORD"
+};
+
+LoginResult loginResult = await loginService.Login(loginRequest);
+
+IAuthenticator discordAuthenticator = new DiscordAuthenticator(loginResult.Token);
+```
+
+Authenticated Api Services:
+---
+
 ```csharp
 AuthenticatedRestFactory authenticatedRestFactory = new AuthenticatedRestFactory(authenticator);
 
