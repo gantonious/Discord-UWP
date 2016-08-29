@@ -32,8 +32,12 @@ namespace Discord_UWP.API.Channel
         [Post("/channels/{channelId}/messages")]
         Task<Message> CreateMessage([AliasAs("channelId")] string channelId, [Body] MessageUpsert message);
 
+        // Set up Properly
         [Post("/channels/{channelId}/messages")]
         Task<Message> UploadFile([AliasAs("channelId")] string channelId);
+
+        [Patch("/channels/{channelId}/messages/{messageId}")]
+        Task<Message> EditMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId, [Body] EditMessage editMessage);
 
         [Delete("/channels/{channelId}/messages/{messageId}")]
         Task DeleteMessage([AliasAs("channelId")] string channelId, [AliasAs("messageId")] string messageId);
