@@ -40,12 +40,15 @@ namespace Discord_UWP.Gateway
         public event EventHandler<GatewayEventArgs<Ready>> Ready;
         public event EventHandler<GatewayEventArgs<Resumed>> Resumed;
 
+        public event EventHandler<GatewayEventArgs<Guild>> GuildCreated;
+        public event EventHandler<GatewayEventArgs<Guild>> GuildUpdated;
+        public event EventHandler<GatewayEventArgs<GuildDelete>> GuildDeleted;
+
         public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelCreated;
-        public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
-
         public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelUpdated;
-
         public event EventHandler<GatewayEventArgs<GuildChannel>> GuildChannelDeleted;
+
+        public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelCreated;
         public event EventHandler<GatewayEventArgs<DirectMessageChannel>> DirectMessageChannelDeleted;
 
         public event EventHandler<GatewayEventArgs<Message>> MessageCreated;
@@ -78,6 +81,9 @@ namespace Discord_UWP.Gateway
             return new Dictionary<string, GatewayEventHandler>
             {
                 { EventNames.READY, OnReady },
+                { EventNames.GUILD_CREATED, OnGuildCreated },
+                { EventNames.GUILD_UPDATED, OnGuildUpdated },
+                { EventNames.GUILD_DELETED, OnGuildDeleted },
                 { EventNames.MESSAGE_CREATED, OnMessageCreated },
                 { EventNames.MESSAGE_UPDATED, OnMessageUpdated },
                 { EventNames.MESSAGE_DELETED, OnMessageDeleted },
@@ -230,6 +236,21 @@ namespace Discord_UWP.Gateway
         {
             var dataAsJObject = gatewayEvent.Data as JObject;
             return dataAsJObject["guild_id"] != null;
+        }
+
+        private void OnGuildCreated(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildCreated);
+        }
+
+        private void OnGuildUpdated(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildUpdated);
+        }
+
+        private void OnGuildDeleted(GatewayEvent gatewayEvent)
+        {
+            FireEventOnDelegate(gatewayEvent, GuildDeleted);
         }
 
         private void FireEventOnDelegate<TEventData>(GatewayEvent gatewayEvent, EventHandler<GatewayEventArgs<TEventData>> eventHandler)
