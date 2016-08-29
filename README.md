@@ -3,7 +3,7 @@ Discord-UWP [![Build status](https://ci.appveyor.com/api/projects/status/2ansr6w
 
 A Discord wrapper in C# compatible with UWP.
 
-Basic Api Services:
+Basic Api Services
 ---
 
 Api services that do not require authentication can be accessed by doing:
@@ -30,7 +30,7 @@ LoginResult loginResult = await loginService.Login(loginRequest);
 IAuthenticator authenticator = new DiscordAuthenticator(loginResult.Token);
 ```
 
-Authenticated Api Services:
+Authenticated Api Services
 ---
 
 ```csharp
