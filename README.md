@@ -55,7 +55,7 @@ To create a Gateway instance, you need a `GatewayConfig` and an `IAuthenticator`
 ```csharp
 GatewayConfig config = await gatewayService.GetGatewayConfigAsync();
 
-Gateway gateway = new Gateway(config, authenticator);
+IGateway gateway = new Gateway(config, authenticator);
 ```
 
 To connect just call:
