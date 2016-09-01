@@ -69,10 +69,24 @@ Then events can be listened to as follows:
 ```csharp
 gateway.MessageCreated += (sender, e) => 
 { 
-    Message message = e.EventPayload;
+    Message message = e.EventData;
     // Handle message
 };
 ```
+
+Reactive Extensions
+---
+
+All the events raised by the gateway are also exposed via `Observable` streams by doing:
+
+```csharp
+gateway.MessageCreated()
+       .Subscribe(m => 
+       {
+           // Handle message
+       });
+```
+
 
 Future Plans
 ===
