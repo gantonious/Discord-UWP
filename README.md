@@ -8,7 +8,12 @@ Basic Api Services
 
 Api services that do not require authentication can be accessed by doing:
 ```csharp
-BasicRestFactory basicRestFactory = new BasicRestFactory();
+DiscordApiConfiguration config = new DiscordApiConfiguration
+{
+    BaseUrl = "https://discordapp.com/api"
+};
+
+BasicRestFactory basicRestFactory = new BasicRestFactory(config);
 
 ILoginService loginService = basicRestFactory.GetLoginService();
 IGatewayService gatewayService = basicRestFactory.GetGatewayService();
@@ -34,7 +39,7 @@ Authenticated Api Services
 ---
 
 ```csharp
-AuthenticatedRestFactory authenticatedRestFactory = new AuthenticatedRestFactory(authenticator);
+AuthenticatedRestFactory authenticatedRestFactory = new AuthenticatedRestFactory(config, authenticator);
 
 IUserService userService = authenticatedRestFactory.GetUserService();
 IGuildService guildService = authenticatedRestFactory.GetGuildService(); 
