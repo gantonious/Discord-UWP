@@ -27,7 +27,7 @@ namespace Discord_UWP.API.Guild
         Task<IEnumerable<GuildChannel>> GetGuildChannels([AliasAs("guildId")] string guildId);
 
         [Post("/guilds/{guildId}/channels")]
-        Task<IEnumerable<GuildChannel>> CreateGuildChannels([AliasAs("guildId")] string guildId, [Body] CreateGuildChannel createGuildChannel);
+        Task<GuildChannel> CreateGuildChannel([AliasAs("guildId")] string guildId, [Body] CreateGuildChannel createGuildChannel);
 
         [Patch("/guilds/{guildId}/channels")]
         Task<IEnumerable<GuildChannel>> ModifyGuildChannels([AliasAs("guildId")] string guildId, [Body] ModifyGuildChannel modifyGuildChannel);
